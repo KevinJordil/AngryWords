@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "218705316222",
+    "firebase_url": "https://angrywrds.firebaseio.com",
+    "project_id": "angrywrds",
+    "storage_bucket": "angrywrds.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218705316222:android:e75e8cc43d9b50e1",
+        "android_client_info": {
+          "package_name": "ch.cpnv.angrywirds"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218705316222-20hfh4dkajo9urjucuqg6o409pp88q5n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ch.cpnv.angrywirds",
+            "certificate_hash": "557610acc75c9b63448c94a2c4ef1abf5e624c38"
+          }
+        },
+        {
+          "client_id": "218705316222-alha2jmq7i9af1aq9hnr4o5gc1h2s83c.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "218705316222-alha2jmq7i9af1aq9hnr4o5gc1h2s83c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADZWLSSlhlXdFX180ETE1JXHN36EZ2HZ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218705316222-alha2jmq7i9af1aq9hnr4o5gc1h2s83c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
