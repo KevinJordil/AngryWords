@@ -1,64 +1,60 @@
 package ch.cpnv.angrywirds.Activities;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import ch.cpnv.angrywirds.AngryWirds;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector3;
+
+import java.util.ArrayList;
+
 import ch.cpnv.angrywirds.Controllers.GameActivityManager;
-import ch.cpnv.angrywirds.Models.Font;
 import ch.cpnv.angrywirds.Models.Scene;
-import ch.cpnv.angrywirds.Models.Words;
+import ch.cpnv.angrywirds.Models.TextButton;
+import ch.cpnv.angrywirds.Models.Vocabulary;
 import ch.cpnv.angrywirds.Providers.VocProvider;
 
-public class GameOver extends GameActivity {
+public class VocSelect extends GameActivity {
+
 
     Sprite background;
     public static Scene scene = new Scene();
-    static BitmapFont titlefont, textfont;
+    ArrayList<TextButton> vocsbutons = new ArrayList<TextButton>();
 
-
-    public GameOver(){
+    public VocSelect(){
         this.create();
     }
 
     @Override
     public void create () {
-
         super.create();
-
-        try{
-            batch.begin();
-        }catch (Exception e){
-
-        }
-
-        VocProvider.submitResults(GameActivityManager.ASSIGNMENTS_ID, GameActivityManager.points);
 
         // Background
         background = new Sprite(new Texture("background.jpg"));
         scene.addbacksprite(background);
 
-        // Font
-        titlefont = Font.get(400, Color.RED, "angrybirds.ttf");
-        textfont = Font.get(150, Color.BLACK, "angrybirds.ttf");
+        for(int i=0; i<VocProvider.homeworks.size(); i++) {
+            if(VocProvider.homeworks.get(i).result == null){
+                vocsbutons.add(new TextButton(200, i*250+300, 2000, 200, 20, 160, VocProvider.homeworks.get(i).title, Color.WHITE, 150, "red.png"));
+            }
+            else {
+                vocsbutons.add(new TextButton(200, i*250+300, 2000, 200, 20, 160, VocProvider.homeworks.get(i).title + " score : "+VocProvider.homeworks.get(i).result, Color.WHITE, 150, "green.png"));
+            }
+
+        }
+
     }
 
     @Override
     public void render () {
         batch.begin();
         scene.draw(batch);
-        glyphLayout.setText(titlefont, "Game Over");
-        titlefont.draw(batch, glyphLayout, 400, 1400);
-        glyphLayout.setText(titlefont, String.valueOf(GameActivityManager.points));
-        titlefont.draw(batch, glyphLayout, 1000, 900);
-        glyphLayout.setText(textfont, "Evnoi des données : "+VocProvider.status);
-        textfont.draw(batch, glyphLayout, 200, 500);
+        for(TextButton button : this.vocsbutons) {
+            button.draw(batch);
+        }
         batch.end();
     }
+
 
     @Override
     public boolean keyDown(int keycode) {
@@ -77,17 +73,24 @@ public class GameOver extends GameActivity {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        Vector3 positions = new Vector3(camera.unproject(new Vector3(screenX, screenY, 0)));
 
-        GameActivityManager.points = GameActivityManager.START_POINTS;
-        GameActivityManager.time = GameActivityManager.START_TIME;
-        GameActivityManager.pop();
-        Gdx.input.setInputProcessor(GameActivityManager.activities.peek());
 
+
+        for(int i = 0; i < VocProvider.homeworks.size(); i++) {
+            if (this.vocsbutons.get(i).getHitBox().contains(positions.x, positions.y)){
+                GameActivityManager.VOC_ID = VocProvider.homeworks.get(i).vocId;
+                GameActivityManager.ASSIGNMENTS_ID = VocProvider.homeworks.get(i).id;
+                GameActivityManager.push(new Play());
+            }
+        }
 
         return false;
     }

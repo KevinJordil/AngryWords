@@ -17,8 +17,10 @@ import ch.cpnv.angrywirds.Models.Button;
 import ch.cpnv.angrywirds.Models.Font;
 import ch.cpnv.angrywirds.Models.PhysicalObject;
 import ch.cpnv.angrywirds.Models.Scene;
+import ch.cpnv.angrywirds.Models.Vocabulary;
 import ch.cpnv.angrywirds.Models.Wasp;
 import ch.cpnv.angrywirds.Models.Words;
+import ch.cpnv.angrywirds.Providers.VocProvider;
 
 public class Play extends GameActivity {
 
@@ -44,11 +46,14 @@ public class Play extends GameActivity {
 
 
         // Scene
-        scene.setWords(new Words[]{
-                new Words("Bleu", "Blue", new String[] {"Blue", "Red", "Purple", "Yellow"}),
-                new Words("Coeur", "Heart", new String[] {"Heart", "Heard", "Earthe", "Earth"}),
-                new Words("Chaise", "Chair", new String[] {"Chair", "Share", "Chaire", "Sure"})
-        });
+        for (Vocabulary voc : VocProvider.vocabularies){
+            if(voc.id == GameActivityManager.VOC_ID){
+                scene.setWords(voc);
+                break;
+            }
+        }
+
+        //scene.setWords(VocProvider.vocabularies.get(GameActivityManager.VOC_ID));
 
         // Background
         background = new Sprite(new Texture("background.jpg"));
@@ -121,7 +126,7 @@ public class Play extends GameActivity {
         font.draw(batch, glyphLayout, 800, 1200);
 
         // Words
-        glyphLayout.setText(Play.font, scene.words[scene.wordsindex].getFrenchword());
+        glyphLayout.setText(Play.font, scene.words.getFrenchword());
         Play.font.draw(batch, glyphLayout , 200, 1275);
 
         // Update

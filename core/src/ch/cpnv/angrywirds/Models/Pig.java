@@ -60,7 +60,7 @@ public final class Pig extends PhysicalObject {
 
     @Override
     public void collision(){
-        if (Play.scene.words[Play.scene.wordsindex].checkWord(getMessage())){
+        if (Play.scene.words.checkWord(getMessage())){
             GameActivityManager.points += 5;
             Play.maintext = "Réussi";
         }

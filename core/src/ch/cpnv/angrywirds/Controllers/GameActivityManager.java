@@ -13,6 +13,8 @@ public abstract class GameActivityManager {
     public static final float START_TIME = 120;
     public static float time = START_TIME;
 
+    public static Integer VOC_ID;
+    public static Integer ASSIGNMENTS_ID;
 
     public static Stack<GameActivity> activities = new Stack<GameActivity>();
 

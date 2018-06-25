@@ -11,25 +11,23 @@ import java.util.List;
 import java.util.Random;
 
 import ch.cpnv.angrywirds.Activities.GameActivity;
-import ch.cpnv.angrywirds.Activities.Play;
 
 public class Scene {
     private ArrayList<PhysicalObject> physicalObjects = new ArrayList<PhysicalObject>();
     private ArrayList<Sprite> backsprites = new ArrayList<Sprite>();
     private ArrayList<Sprite> frontsprites = new ArrayList<Sprite>();
     private ArrayList<Button> buttons = new ArrayList<Button>();
-    private GlyphLayout glyphLayout = new GlyphLayout();
 
 
     private Random rand = new Random();
-    public Words[] words;
-    public Integer wordsindex;
+    public ArrayList<Word> listwords;
+    public Words words;
 
     public Scene() {
     }
 
-    public void setWords(Words[] words){
-        this.words = words;
+    public void setWords(Vocabulary voc){
+        this.listwords = voc.words;
 
     }
 
@@ -123,7 +121,11 @@ public class Scene {
     }
 
     public void randomgenerate(){
-        wordsindex = rand.nextInt(words.length);
+        // Copy object other use as reference
+        ArrayList<Word> clone = new ArrayList<Word>(listwords.size());
+        for (Word item : listwords) clone.add(item);
+        words = new Words(clone, 4);
+
 
         //Box
         for(int i=1; i<=6; i++){
@@ -170,7 +172,7 @@ public class Scene {
 
             Integer y = (rand.nextInt((int)GameActivity.WORLD_HEIGHT/200-4)+4);
             try{
-                this.addphysicalobject(new Pig(x, y*100, 100, 100, words[wordsindex].words[i]));
+                this.addphysicalobject(new Pig(x, y*100, 100, 100, words.words.get(i).value2));
             } catch (Exception e) {
                 i--;
                 Gdx.app.log("SCENEERROR", e.getMessage());
